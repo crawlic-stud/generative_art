@@ -1,4 +1,4 @@
-## Generative art with python and PIL
+## Generative art with python, PIL and Bézier curves
 ***
 Example 1:
 
