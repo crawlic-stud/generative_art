@@ -16,16 +16,19 @@ class Curve:
         self.image = None
 
     def create_curve(self):
+        """Creates curve from given points (attribute curve) and returns points of curve"""
         curve = [tuple(i) for i in create_curve(self.t_points, self.points)]
         self.curve = curve
         return curve
 
     def offset(self, img):
+        """Offsets curve to center"""
         off_x, off_y = calculate_offset(img, self.curve)
         points = [(self.curve[i][0] + off_x, self.curve[i][1] - off_y) for i in range(len(self.curve))]
         self.curve = points
 
     def draw(self, img, centered=False):
+        """Draws standard curve."""
         self.image = img
 
         if centered:
@@ -35,6 +38,7 @@ class Curve:
         img_draw.line(self.curve, fill=self.color, width=self.width)
 
     def draw_points(self, img, centered=False):
+        """Draw curve as dots (according to accuracy could look similar to standard, but impacts performance)."""
         self.image = img
 
         if centered:

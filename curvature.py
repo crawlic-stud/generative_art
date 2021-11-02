@@ -1,13 +1,13 @@
 import random
 from PIL import Image, ImageDraw
 from tools.colors import *
-from classes.curve import Curve
-from tools.image_utils import points_along_line, calculate_offset
+from classes.Сurve import Curve
+from tools.image_utils import points_along_line, calculate_offset, create_box
 
 
 def generate_art(image, points_num, start=None, end=None, color=random_pastel,
                  color_change=True, steps=100, width=lambda: 5, curve_points=False,
-                 draw_rect=True):
+                 draw_rect=True, box=False):
 
     accuracy = 0.005
 
@@ -20,7 +20,7 @@ def generate_art(image, points_num, start=None, end=None, color=random_pastel,
     for _ in range(steps):
         if color_change:
             curve.color = color()
-        curve.points = points_along_line(image, points_num, start=start, end=end)
+        curve.points = points_along_line(image, points_num, start=start, end=end, box=box)
         curve.width = width()
         curve.create_curve()
 
@@ -36,7 +36,7 @@ def generate_art(image, points_num, start=None, end=None, color=random_pastel,
 
     polygon_image = Image.new('RGBA', image.size, (0, 0, 0, 0))
 
-    polygon_pos = [tuple(start), (end[0], start[1]), tuple(end), (start[0], end[1])]
+    polygon_pos = create_box(start, end)
     polygon_color = add_transparency(color(), random.randint(10, 30) / 100)
 
     ImageDraw.Draw(polygon_image).polygon(polygon_pos, fill=polygon_color)
@@ -51,14 +51,14 @@ if __name__ == '__main__':
     factor = size // 1000
     img = Image.new('RGBA', (size, size), (0, 0, 0, 0))
 
-    indent = 1000
-    # start = [random.randint(indent, size - indent), random.randint(indent, size - indent)]
-    # end = [random.randint(indent, size - indent), random.randint(indent, size - indent)]
+    indent = 10
+    start = [random.randint(indent, size - indent), random.randint(indent, size - indent)]
+    end = [random.randint(indent, size - indent), random.randint(indent, size - indent)]
 
-    start = [indent, indent]
-    end = [size - indent, size - indent]
+    # start = [indent, indent]
+    # end = [size - indent, size - indent]
 
-    box = [tuple(start), (end[0], start[1]), tuple(end), (start[0], end[1])]
+    box = create_box(start, end)
     off_x, off_y = calculate_offset(img, box)
 
     img = generate_art(image=img,
@@ -70,7 +70,8 @@ if __name__ == '__main__':
                        curve_points=False,
                        steps=20,
                        width=lambda: random.randint(1, 15),
-                       draw_rect=True)
+                       draw_rect=True,
+                       box=True)
 
     img = img.resize((size//factor, size//factor), resample=Image.ANTIALIAS)
-    img.save('images/curvature.png')
+    img.save('./images/curvature.png')
