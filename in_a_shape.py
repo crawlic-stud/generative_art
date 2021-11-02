@@ -46,7 +46,7 @@ if __name__ == '__main__':
                        points_num=5,
                        steps=20,
                        color_change=True,
-                       color_func=random_pastel)
+                       color_func=random_green)
 
     # makes image smoother
     img = img.resize((size//factor, size//factor), resample=Image.ANTIALIAS)

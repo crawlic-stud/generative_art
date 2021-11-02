@@ -1,8 +1,8 @@
 ## Generative art with python and PIL
 ***
 Example 1:
-![](images/curve.png)
+![](images/curve_example.png)
 Example 2:
-![](images/shape.png)
+![](images/shape_example.png)
 Example 3:
-![](images/curvature.png)
+![](images/curvature_example.png)

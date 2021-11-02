@@ -28,17 +28,36 @@ def create_points(image, points_num, indent=50):
     return pts
 
 
-def points_along_line(image, points_num, indent=50):
-    start_point = [indent, indent]
-    end_point = [image.size[0] - indent, image.size[1] - indent]
-    pts = [start_point]
+def is_horizontal(start, end):
+    """Calculates general orientation of a line.
+    True - line is generally horizontal, False - line is generally vertical."""
 
-    step_length = end_point[0] // points_num
+    delta_x = end[0] - start[0]
+    delta_y = end[1] - start[1]
+    return abs(delta_x) >= abs(delta_y)
+
+
+def points_along_line(image, points_num, start=None, end=None, indent=50):
+    """Draws random points along line from start point to end point."""
+    if start is None:
+        start = [indent, indent]
+    if end is None:
+        end = [image.size[0] - indent, image.size[1] - indent]
+
+    pts = [start]
+
     for i in range(points_num - 1):
-        new_point = [step_length * (i + 1), random.randint(0, image.size[1])]
+
+        if is_horizontal(start, end):
+            step_length = (end[0] - start[0]) // points_num
+            new_point = [start[0] + step_length * (i + 1), random.randint(0, image.size[1])]
+        else:
+            step_length = (end[1] - start[1]) // points_num
+            new_point = [random.randint(0, image.size[1]), start[1] + step_length * (i + 1)]
+
         pts.append(new_point)
 
-    pts.append(end_point)
+    pts.append(end)
     pts = np.array(pts)
     return pts
 

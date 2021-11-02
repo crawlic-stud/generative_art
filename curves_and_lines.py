@@ -50,7 +50,7 @@ if __name__ == '__main__':
                           lines=300,
                           steps=10,
                           color_change=True,
-                          color_func=random_pastel)
+                          color_func=random_red)
 
     # makes image smoother
     my_img = my_img.resize((size//factor, size//factor), resample=Image.ANTIALIAS)
