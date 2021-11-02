@@ -31,6 +31,17 @@ def random_saturated(hue=None):
     )
 
 
+def random_pastel():
+    hue = random.randint(0, 100) / 100
+    saturation = random.randint(30, 60) / 100
+
+    return (
+        hue,
+        saturation,
+        1
+    )
+
+
 def hsv_to_rgb(h, s, v):
     rgb = colorsys.hsv_to_rgb(h, s, v)
     return (
