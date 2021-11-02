@@ -2,11 +2,13 @@ import random
 from PIL import Image, ImageDraw
 from tools.colors import *
 from classes.curve import Curve
-from tools.image_utils import points_along_line, create_image, calculate_offset
+from tools.image_utils import points_along_line, calculate_offset
 
 
 def generate_art(image, points_num, start=None, end=None, color=random_pastel,
-                 color_change=True, steps=100, width=lambda: 1):
+                 color_change=True, steps=100, width=lambda: 5, curve_points=False,
+                 draw_rect=True):
+
     accuracy = 0.005
 
     curve = Curve(
@@ -15,8 +17,6 @@ def generate_art(image, points_num, start=None, end=None, color=random_pastel,
         color=color(),
         width=width())
 
-    print(start, end)
-
     for _ in range(steps):
         if color_change:
             curve.color = color()
@@ -24,9 +24,15 @@ def generate_art(image, points_num, start=None, end=None, color=random_pastel,
         curve.width = width()
         curve.create_curve()
 
-        curve.draw(image, centered=True)
+        if curve_points:
+            curve.draw_points(image, centered=True)
+        else:
+            curve.draw(image, centered=True)
 
         image = Image.alpha_composite(image, curve.image)
+
+    if not draw_rect:
+        return image
 
     polygon_image = Image.new('RGBA', image.size, (0, 0, 0, 0))
 
@@ -53,13 +59,15 @@ if __name__ == '__main__':
     end = [random.randint(indent, size - indent), random.randint(indent, size - indent)]
 
     img = generate_art(image=img,
-                       points_num=3,
+                       points_num=5,
                        start=start,
                        end=end,
                        color=random_blue,
                        color_change=True,
-                       steps=50,
-                       width=lambda: random.randint(1, 15))
+                       curve_points=False,
+                       steps=30,
+                       width=lambda: random.randint(1, 15),
+                       draw_rect=True)
 
     img = img.resize((size//factor, size//factor), resample=Image.ANTIALIAS)
     img.save('images/curvature.png')
