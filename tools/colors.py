@@ -24,7 +24,7 @@ def random_saturated(hue=None):
     if hue is None:
         hue = random.randint(10, 100) / 100
 
-    return (
+    return hsv_to_rgb(
         hue,
         saturation,
         random.randint(10, 100) / 100
@@ -35,11 +35,43 @@ def random_pastel():
     hue = random.randint(0, 100) / 100
     saturation = random.randint(30, 60) / 100
 
-    return (
+    return hsv_to_rgb(
         hue,
         saturation,
         1
     )
+
+
+def random_red():
+    hue = random.randint(0, 20) / 360
+    return hsv_to_rgb(
+        hue,
+        random.randint(60, 100) / 100,
+        random.randint(60, 100) / 100
+    )
+
+
+def random_green():
+    hue = random.randint(61, 140) / 360
+    return hsv_to_rgb(
+        hue,
+        random.randint(50, 100) / 100,
+        random.randint(50, 100) / 100
+    )
+
+
+def random_blue():
+    hue = random.randint(170, 240) / 360
+    return hsv_to_rgb(
+        hue,
+        random.randint(50, 100) / 100,
+        random.randint(50, 100) / 100
+    )
+
+
+def random_gray():
+    gray = random.randint(50, 200)
+    return gray, gray, gray
 
 
 def hsv_to_rgb(h, s, v):
