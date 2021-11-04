@@ -74,6 +74,17 @@ def random_gray():
     return gray, gray, gray
 
 
+def random_dark(hue=None):
+    if hue is None:
+        hue = random.randint(0, 360) / 360
+
+    return hsv_to_rgb(
+        hue,
+        random.randint(50, 80) / 100,
+        random.randint(20, 40) / 100
+    )
+
+
 def hsv_to_rgb(h, s, v):
     rgb = colorsys.hsv_to_rgb(h, s, v)
     return (

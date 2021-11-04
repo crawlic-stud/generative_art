@@ -9,3 +9,5 @@ Example 3:
 ![](images/curvature_example.png)
 Example 4:
 ![](images/rays_example.png)
+Example 5:
+![](images/star_example.png)

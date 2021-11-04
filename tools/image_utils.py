@@ -73,14 +73,25 @@ def points_along_line(image, points_num, start=None, end=None, indent=100, box=F
     return pts
 
 
-def ray_circle(center, rays_num, ray_len):
-    angle = radians(360 / rays_num)
+def n_shape(center, sides_num, radius):
+    angle = radians(360 / sides_num)
     points = []
-    for i in range(rays_num):
-        x = center[0] - ray_len * cos(angle * i)
-        y = center[1] - ray_len * sin(angle * i)
+    for i in range(sides_num):
+        x = center[0] - radius * cos(angle * i)
+        y = center[1] - radius * sin(angle * i)
         points.append((x, y))
     return points + [points[0]]
+
+
+def ray_star(center, rays_num, radius, smoothness=1080):
+    circle_points = n_shape(center, smoothness, radius)
+    step = smoothness // rays_num
+
+    points = []
+    for i in range(0, smoothness//2, step):
+        line = [circle_points[i], circle_points[i + smoothness//2]]
+        points.append(line)
+    return points
 
 
 def create_box(start, end):
