@@ -1,7 +1,7 @@
 import random
 import numpy as np
 from PIL import Image
-from math import sin, cos, radians
+from math import sin, cos, radians, sqrt
 
 
 def calculate_offset(image, points):
@@ -73,17 +73,21 @@ def points_along_line(image, points_num, start=None, end=None, indent=100, box=F
     return pts
 
 
-def n_shape(center, sides_num, radius):
+def n_shape(center, sides_num, radius, numpy=False):
+    """Creates round polygon with n sides."""
     angle = radians(360 / sides_num)
     points = []
     for i in range(sides_num):
         x = center[0] - radius * cos(angle * i)
         y = center[1] - radius * sin(angle * i)
-        points.append((x, y))
+        points.append([x, y])
+    if numpy:
+        return np.array(points + [points[0]])
     return points + [points[0]]
 
 
 def ray_star(center, rays_num, radius, smoothness=1080):
+    """Creates circle of rays."""
     circle_points = n_shape(center, smoothness, radius)
     step = smoothness // rays_num
 
@@ -91,9 +95,51 @@ def ray_star(center, rays_num, radius, smoothness=1080):
     for i in range(0, smoothness//2, step):
         line = [circle_points[i], circle_points[i + smoothness//2]]
         points.append(line)
+
     return points
 
 
+def spiral_points(center, smoothness, radius, offset, numpy=False):
+    """Creates spiral points."""
+    circle = n_shape(center, smoothness, radius)
+    points = []
+    while radius >= offset[0] * smoothness:
+        points += [(circle[i][0] + i * offset[0], circle[i][1] + i * offset[1]) for i in range(len(circle))]
+        radius -= offset[0] * smoothness
+        circle = n_shape(center, smoothness, radius)
+    if numpy:
+        return np.array(points)
+    return points
+
+
+def points_distance(p1, p2):
+    """Calculates distance between two points."""
+    x1, y1 = p1
+    x2, y2 = p2
+
+    return round(sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2), 3)
+
+
 def create_box(start, end):
+    """Creates bounding box for given line."""
     box = [tuple(start), (end[0], start[1]), tuple(end), (start[0], end[1])]
     return box
+
+
+def rotate_center(center, points, angle):
+    """Rotates list of points around given center."""
+    result = []
+    for point in points:
+        x1, y1 = center
+        x2, y2 = point
+
+        new_x = x1 + cos(angle) * (x2 - x1) - sin(angle) * (y2 - y1)
+        new_y = y1 + sin(angle) * (x2 - x1) + cos(angle) * (y2 - y1)
+
+        result.append((new_x, new_y))
+
+    return result
+
+
+if __name__ == '__main__':
+    print(points_distance((100, 200), (300, 900)))

@@ -3,6 +3,7 @@ from PIL import Image
 
 
 class ArtGenerator:
+    """Class for creating art using different combinations of Bezier curves."""
     def __init__(self, size, points_num, accuracy, steps, width, color):
         self.curve = Curve(
             points=[[0, 0], [1, 1]],
@@ -18,8 +19,8 @@ class ArtGenerator:
         self.points_func = None
         self.width = width
 
-    def main(self, dots=False, centered=True, draw=True):
-        """Main function for repeatable operations"""
+    def setup(self):
+        """Setups new params for curve."""
 
         if self.points_func is None:
             raise(ValueError('please fill points_func for curve.'))
@@ -31,6 +32,11 @@ class ArtGenerator:
 
         self.curve.points = self.points_func()
         self.curve.create_curve()
+
+    def main(self, dots=False, centered=True, draw=True):
+        """Main function for repeatable operations"""
+
+        self.setup()
 
         if not draw:
             return
@@ -52,3 +58,16 @@ class ArtGenerator:
             self.main()
             self.image = Image.alpha_composite(self.image, self.curve.image)
 
+
+# Basic template (copy & create your own)
+class YourClass(ArtGenerator):
+    def __init__(self, size, points_num, steps, width, color):
+        super().__init__(
+            size=size,
+            points_num=points_num,
+            accuracy=0.005,
+            steps=steps,
+            width=width,
+            color=color)
+
+        # self.points_func = lambda: <your func>
