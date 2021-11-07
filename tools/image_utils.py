@@ -112,6 +112,14 @@ def spiral_points(center, smoothness, radius, offset, numpy=False):
     return points
 
 
+def spiral_from_center(center, num, rotation, length):
+    """TODO: Creates spiral points from given center."""
+    angle = 360 // num
+    x = cos(rotation) * length
+    y = sin(rotation) * length
+    pass
+
+
 def points_distance(p1, p2):
     """Calculates distance between two points."""
     x1, y1 = p1

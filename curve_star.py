@@ -35,10 +35,10 @@ class Star(ArtGenerator):
 if __name__ == '__main__':
     art = Star(
         size=1000,
-        rays_num=9,
+        rays_num=11,
         width=lambda: random.randint(1, 5),
         color=random_blue,
-        steps=50,
+        steps=100,
         bend=2,
         radius=300,
         box=True,

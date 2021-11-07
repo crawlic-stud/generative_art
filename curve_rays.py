@@ -22,11 +22,23 @@ class Rays(ArtGenerator):
         self.points = n_shape(self.center, rays_num, radius * 5)
 
     def main(self, dots=False, centered=False, draw=True):
-        for point in self.points:
+        step = 2
+        for i, point in enumerate(self.points):
+            try:
+                end = self.points[i + step]
+            except IndexError:
+                end = self.points[i]
+            self.points_func = lambda: points_along_line(image=self.image,
+                                                         points_num=self.points_num,
+                                                         start=point,
+                                                         end=end,
+                                                         box=self.box)
+            super().main(centered=centered)
+
             self.points_func = lambda: points_along_line(image=self.image,
                                                          points_num=self.points_num,
                                                          start=self.center,
-                                                         end=point,
+                                                         end=end,
                                                          box=self.box)
             super().main(centered=centered)
 
@@ -36,7 +48,8 @@ class Rays(ArtGenerator):
         polygon_image = Image.new('RGBA', self.image.size, (0, 0, 0, 0))
         polygon_color = add_transparency(self.color(), random.randint(10, 30) / 100)
 
-        ImageDraw.Draw(polygon_image).polygon(self.points, fill=polygon_color)
+        points = [tuple(i) for i in self.points]
+        ImageDraw.Draw(polygon_image).polygon(points, fill=polygon_color)
 
         self.image = Image.alpha_composite(polygon_image, self.image)
 
@@ -46,11 +59,11 @@ if __name__ == '__main__':
 
     img = Rays(size=size,
                center=(size // 2, size // 2),
-               rays_num=181,
-               points_num=2,
+               rays_num=91,
+               points_num=3,
                radius=size // 3,
-               steps=1,
-               color=random_gray,
+               steps=3,
+               color=random_blue,
                width=lambda: random.randint(1, 15),
                box=True)
 

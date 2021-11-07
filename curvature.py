@@ -52,7 +52,7 @@ if __name__ == '__main__':
                           points_num=25,
                           start=start,
                           end=end,
-                          color=random_blue,
+                          color=random_green,
                           color_change=True,
                           width=lambda: random.randint(1, 15),
                           draw_rect=True,
