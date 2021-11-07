@@ -37,7 +37,7 @@ if __name__ == '__main__':
                             lines=300,
                             steps=10,
                             width=lambda: 5,
-                            color=random_red)
+                            color=random_pastel)
 
     my_img.points_func = lambda: create_points(my_img.image, my_img.points_num)
     my_img.create()

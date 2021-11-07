@@ -28,6 +28,7 @@ if __name__ == '__main__':
         color=random_red,
     )
 
-    art.points_func = lambda: n_shape((500, 500), 3, 1500, numpy=True)
-    art.create()
+    for i in range(100):
+        art.points_func = lambda: n_shape((500 + random.randint(-100, 100), 500 + random.randint(-100, 100)), 3, 1500, numpy=True)
+        art.create()
     art.get_image().show()

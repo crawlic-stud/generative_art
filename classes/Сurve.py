@@ -16,13 +16,13 @@ class Curve:
         self.image = None
 
     def create_curve(self):
-        """Creates curve from given points (attribute curve) and returns points of curve"""
+        """Creates curve from given points (attribute curve) and returns points of curve."""
         curve = [tuple(i) for i in create_curve(self.t_points, self.points)]
         self.curve = curve
         return curve
 
     def offset(self, img):
-        """Offsets curve to center"""
+        """Offsets curve to center."""
         off_x, off_y = calculate_offset(img, self.curve)
         points = [(self.curve[i][0] + off_x, self.curve[i][1] - off_y) for i in range(len(self.curve))]
         self.curve = points

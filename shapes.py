@@ -7,12 +7,12 @@ from tools.image_utils import create_points
 
 
 class Shapes(ArtGenerator):
-    def __init__(self, size, points_num, steps, width, color):
+    def __init__(self, size, points_num, steps, color):
         super().__init__(size=size,
                          points_num=points_num,
                          accuracy=0.005,
                          steps=steps,
-                         width=width,
+                         width=lambda: 0,
                          color=color)
 
         self.points_func = lambda: create_points(self.image, self.points_num)
@@ -31,10 +31,9 @@ if __name__ == '__main__':
     size = 1000
 
     img = Shapes(size=size,
-                 points_num=5,
-                 steps=20,
-                 width=lambda: -1,
-                 color=random_green)
+                 points_num=10,
+                 steps=30,
+                 color=random_pastel)
 
     img.create()
     img.get_image().save('images/shape.png')

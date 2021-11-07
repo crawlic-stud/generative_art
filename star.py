@@ -31,14 +31,21 @@ class Star(ArtGenerator):
                                                          box=self.box)
             super().main(centered=self.centered)
 
+            polygon = Image.new('RGBA', self.image.size, (0, 0, 0, 0))
+            polygon_color = add_transparency(self.color(), random.randint(1, 5) / 100)
+            ImageDraw.Draw(polygon).polygon(self.curve.curve, fill=polygon_color)
+
+            self.curve.image = polygon
+            self.image = Image.alpha_composite(self.image, self.curve.image)
+
 
 if __name__ == '__main__':
     art = Star(
         size=1000,
         rays_num=11,
-        width=lambda: random.randint(1, 5),
+        width=lambda: random.randint(1, 3),
         color=random_blue,
-        steps=100,
+        steps=25,
         bend=2,
         radius=300,
         box=True,

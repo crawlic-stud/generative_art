@@ -30,9 +30,6 @@ def kaleidoscope(size, start, radius, angle, smoothness, color, width,
         spiral.color = color()
         spiral.width = width()
         spiral.radius += 5
-        #spiral.start[0] += random.randint(1, 10)
-        #spiral.start[1] += random.randint(1, 10)
-        # spiral.off_y = random.randint(1, 10)
 
         spiral.draw(image)
 
@@ -40,17 +37,17 @@ def kaleidoscope(size, start, radius, angle, smoothness, color, width,
 
 
 if __name__ == '__main__':
-    angle = random.randint(1, 60)
+    angle = random.randint(1, 30)
 
     spiral = kaleidoscope(
         size=1000,
         start=(500, 500),
         radius=200,
         angle=angle,
-        smoothness=100,
-        color=random_pastel,
-        width=lambda: random.randint(1, 2),
-        offset_x=2,
+        smoothness=8,
+        color=random_red,
+        width=lambda: random.randint(4, 5),
+        offset_x=20,
         offset_y=10
     )
 

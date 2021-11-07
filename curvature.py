@@ -6,7 +6,7 @@ from tools.image_utils import points_along_line, calculate_offset, create_box
 
 
 class Curvature(ArtGenerator):
-    def __init__(self, size, points_num, width, steps, color, color_change=True,
+    def __init__(self, size, points_num, width, steps, color,
                  start=None, end=None, draw_rect=True, box=False):
 
         super().__init__(size=size,
@@ -16,11 +16,13 @@ class Curvature(ArtGenerator):
                          steps=steps,
                          width=width)
 
-        self.color_change = color_change
         self.start = [i * 5 for i in start]
         self.end = [i * 5 for i in end]
         self.points_func = lambda: points_along_line(self.image, self.points_num, self.start, self.end, box=box)
         self.draw_rect = draw_rect
+
+    def main(self, dots=False, centered=True, draw=True):
+        super().main(centered=False)
 
     def create(self):
         super().create()
@@ -49,15 +51,14 @@ if __name__ == '__main__':
     # end = [size - indent, size - indent]
 
     curvature = Curvature(size=size,
-                          points_num=25,
+                          points_num=5,
                           start=start,
                           end=end,
-                          color=random_green,
-                          color_change=True,
+                          color=random_blue,
                           width=lambda: random.randint(1, 15),
                           draw_rect=True,
                           box=True,
-                          steps=10)
+                          steps=20)
 
     off_x, off_y = calculate_offset(curvature.image, create_box(curvature.start, curvature.end))
     curvature.start = [curvature.start[0] + off_x, curvature.start[1] - off_y]
