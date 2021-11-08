@@ -16,6 +16,7 @@ class CurvesAndLines(ArtGenerator):
 
         self.lines = lines
         self.line_width = line_width
+        self.points_func = lambda: create_points(self.image, self.points_num)
 
     def main(self, dots=False, centered=True, draw=True):
         super().main()
@@ -39,6 +40,5 @@ if __name__ == '__main__':
                             width=lambda: 5,
                             color=random_pastel)
 
-    my_img.points_func = lambda: create_points(my_img.image, my_img.points_num)
     my_img.create()
     my_img.get_image().save('images/curve.png')

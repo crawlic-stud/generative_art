@@ -44,11 +44,11 @@ if __name__ == '__main__':
         start=(500, 500),
         radius=200,
         angle=angle,
-        smoothness=8,
+        smoothness=4,
         color=random_red,
-        width=lambda: random.randint(4, 5),
+        width=lambda: random.randint(1, 2),
         offset_x=20,
-        offset_y=10
+        offset_y=300
     )
 
     spiral.save('images/spiral.png')

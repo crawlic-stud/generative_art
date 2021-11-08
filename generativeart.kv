@@ -1,0 +1,50 @@
+<MainMenu>:
+    name: "menu"
+
+    GridLayout:
+        cols: 1
+
+        Button:
+            text: "Generate!"
+            on_release:
+                root.manager.current = "curves_lines"
+                root.manager.transition.direction = "left"
+
+<CurvesLines>:
+    name: "curves_lines"
+
+    canvas.before:
+        Color:
+            rgba: .1, .1, .1, 1
+
+    RelativeLayout:
+
+        Button:
+
+            id: draw
+            text: "Draw"
+
+            on_press:
+                draw.text = "Wait..."
+
+            on_release:
+                root.draw()
+                image.reload()
+                draw.text = "Draw"
+
+            size_hint: 0.2, 0.1
+            font_size: 20
+
+        Button:
+            id: back
+            text: "Back"
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": .8, "y": .9}
+
+            on_release:
+                root.manager.current = "menu"
+                root.manager.transition.direction = "right"
+
+        Image:
+            id: image
+            source: root.path
