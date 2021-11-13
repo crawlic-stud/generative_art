@@ -1,5 +1,5 @@
 from PIL import ImageDraw
-from tools.image_utils import rotate_center, spiral_points
+from main.tools.image_utils import rotate_center, spiral_points
 from math import radians
 
 

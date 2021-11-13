@@ -1,7 +1,6 @@
 import random
 import numpy as np
-from PIL import Image
-from math import sin, cos, radians, sqrt
+from math import sin, cos, radians, sqrt, atan, pi
 
 
 def calculate_offset(image, points):
@@ -73,6 +72,26 @@ def points_along_line(image, points_num, start=None, end=None, indent=100, box=F
     return pts
 
 
+def points_around_line(points_num, start=None, end=None, indent=100):
+    """Creates points for curve to go around line."""
+    if start is None:
+        start = [indent, indent]
+    if end is None:
+        end = [indent * 2, indent * 2]
+
+    pts = [start]
+    step_length = distance(start, end) // points_num
+    angle1 = atan(distance((0, start[1]), (0, end[1])) / distance((start[0], 0), (end[0], 0)))
+    angle2 = pi - angle1
+    # print(f'{step_length, angle}')
+    for i in range(points_num - 1):
+        pass
+
+    pts.append(end)
+    pts = np.array(pts)
+    return pts
+
+
 def n_shape(center, sides_num, radius, numpy=False):
     """Creates round polygon with n sides."""
     angle = radians(360 / sides_num)
@@ -112,15 +131,7 @@ def spiral_points(center, smoothness, radius, offset, numpy=False):
     return points
 
 
-def spiral_from_center(center, num, rotation, length):
-    """TODO: Creates spiral points from given center."""
-    angle = 360 // num
-    x = cos(rotation) * length
-    y = sin(rotation) * length
-    pass
-
-
-def points_distance(p1, p2):
+def distance(p1, p2):
     """Calculates distance between two points."""
     x1, y1 = p1
     x2, y2 = p2
@@ -150,4 +161,6 @@ def rotate_center(center, points, angle):
 
 
 if __name__ == '__main__':
-    print(points_distance((100, 200), (300, 900)))
+    # print(distance((100, 200), (300, 900)))
+
+    points_around_line(5, (0, 0), (300, 300))

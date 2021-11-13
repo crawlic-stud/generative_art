@@ -1,6 +1,6 @@
-from tools.bezier import create_curve
+from main.tools.bezier import create_curve
 import numpy as np
-from tools.image_utils import calculate_offset
+from main.tools.image_utils import calculate_offset
 from PIL import ImageDraw
 
 
@@ -11,13 +11,13 @@ class Curve:
         self.accuracy = accuracy
         self.color = color
         self.width = width
-        self.t_points = np.arange(0, 1, accuracy)
         self.curve = []
         self.image = None
 
     def create_curve(self):
         """Creates curve from given points (attribute curve) and returns points of curve."""
-        curve = [tuple(i) for i in create_curve(self.t_points, self.points)]
+        t_points = np.arange(0, 1, self.accuracy)
+        curve = [tuple(i) for i in create_curve(t_points, self.points)]
         self.curve = curve
         return curve
 

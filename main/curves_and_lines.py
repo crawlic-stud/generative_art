@@ -1,8 +1,8 @@
 import random
 from PIL import Image, ImageDraw
-from tools.colors import *
-from classes.ArtGenerator import ArtGenerator
-from tools.image_utils import create_points
+from main.tools.colors import *
+from main.classes.ArtGenerator import ArtGenerator
+from main.tools.image_utils import create_points
 
 
 class CurvesAndLines(ArtGenerator):

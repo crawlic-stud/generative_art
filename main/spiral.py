@@ -1,9 +1,6 @@
-from classes.Spiral import Spiral
-from classes.ArtGenerator import ArtGenerator
-import random
+from main.classes.Spiral import Spiral
 from PIL import Image
-from tools.colors import *
-from tools.image_utils import n_shape
+from main.tools.colors import *
 
 
 def kaleidoscope(size, start, radius, angle, smoothness, color, width,

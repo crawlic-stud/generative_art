@@ -1,4 +1,4 @@
-from classes.Сurve import Curve
+from main.classes.Сurve import Curve
 from PIL import Image
 
 
@@ -70,4 +70,5 @@ class YourClass(ArtGenerator):
             width=width,
             color=color)
 
+        # REMEMBER:
         # self.points_func = lambda: <your func>

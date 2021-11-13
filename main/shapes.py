@@ -1,9 +1,9 @@
 import random
 from PIL import Image, ImageDraw
-from tools.colors import random_pastel, hsv_to_rgb, add_transparency, random_gray, random_red, random_green, random_blue
-from classes.Сurve import Curve
-from classes.ArtGenerator import ArtGenerator
-from tools.image_utils import create_points
+
+from main.tools.colors import random_pastel, hsv_to_rgb, add_transparency, random_gray, random_red, random_green, random_blue
+from main.classes.ArtGenerator import ArtGenerator
+from main.tools.image_utils import create_points
 
 
 class Shapes(ArtGenerator):

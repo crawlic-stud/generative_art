@@ -1,3 +1,44 @@
+
+
+<Back>:
+    id: back
+    text: "<"
+    size_hint: 0.1, 0.1
+    font_size: 30
+    color: (0, 0, 0, .6)
+    background_normal: ''
+    background_color: (.6, .6, .6, .1)
+
+<Next>:
+    id: next
+    text: ">"
+    size_hint: 0.1, 0.1
+    font_size: 30
+    color: (0, 0, 0, .6)
+    background_normal: ''
+    background_color: (.6, .6, .6, .1)
+
+<Draw>:
+    id: draw
+    text: "Draw"
+
+    on_press:
+        draw.text = "Wait..."
+
+    on_release:
+        draw.text = "Draw"
+
+    size_hint: 0.6, 0.1
+    font_size: 30
+    color: (0, 0, 0, .6)
+    background_normal: ''
+    background_color: (.6, .6, .6, .1)
+
+<CustomLayout>:
+    cols: 3
+    size_hint_y: 0.2
+
+
 <MainMenu>:
     name: "menu"
 
@@ -6,45 +47,165 @@
 
         Button:
             text: "Generate!"
+            font_size: 50
+            color: (0, 0, 0, .6)
+            background_normal: ''
+            background_color: (.6, .6, .6, .1)
             on_release:
                 root.manager.current = "curves_lines"
                 root.manager.transition.direction = "left"
 
-<CurvesLines>:
+<CurvesLinesArt>:
     name: "curves_lines"
 
     canvas.before:
         Color:
             rgba: .1, .1, .1, 1
 
-    RelativeLayout:
-
-        Button:
-
-            id: draw
-            text: "Draw"
-
-            on_press:
-                draw.text = "Wait..."
-
-            on_release:
-                root.draw()
-                image.reload()
-                draw.text = "Draw"
-
-            size_hint: 0.2, 0.1
-            font_size: 20
-
-        Button:
-            id: back
-            text: "Back"
-            size_hint: 0.2, 0.1
-            pos_hint: {"x": .8, "y": .9}
-
-            on_release:
-                root.manager.current = "menu"
-                root.manager.transition.direction = "right"
+    GridLayout:
+        rows: 2
 
         Image:
             id: image
             source: root.path
+
+        CustomLayout:
+
+            Back:
+                on_release:
+                    root.manager.current = "menu"
+                    root.manager.transition.direction = "right"
+
+            Draw:
+                on_release:
+                    root.draw()
+                    image.reload()
+
+            Next:
+                on_release:
+                    root.manager.current = "shape"
+                    root.manager.transition.direction = "left"
+
+<ShapesArt>:
+    name: "shape"
+
+    canvas.before:
+        Color:
+            rgba: .1, .1, .1, 1
+
+    GridLayout:
+        rows: 2
+
+        Image:
+            id: image
+            source: root.path
+
+        CustomLayout:
+
+            Back:
+                on_release:
+                    root.manager.current = "curves_lines"
+                    root.manager.transition.direction = "right"
+
+            Draw:
+                on_release:
+                    root.draw()
+                    image.reload()
+
+            Next:
+                on_release:
+                    root.manager.current = "curvature"
+                    root.manager.transition.direction = "left"
+
+<CurvatureArt>:
+    name: "curvature"
+
+    canvas.before:
+        Color:
+            rgba: .1, .1, .1, 1
+
+    GridLayout:
+        rows: 2
+
+        Image:
+            id: image
+            source: root.path
+
+        CustomLayout:
+
+            Back:
+                on_release:
+                    root.manager.current = "shape"
+                    root.manager.transition.direction = "right"
+
+            Draw:
+                on_release:
+                    root.draw()
+                    image.reload()
+
+            Next:
+                on_release:
+                    root.manager.current = "circle"
+                    root.manager.transition.direction = "left"
+
+<CircleArt>:
+    name: "circle"
+
+    canvas.before:
+        Color:
+            rgba: .1, .1, .1, 1
+
+    GridLayout:
+        rows: 2
+
+        Image:
+            id: image
+            source: root.path
+
+        CustomLayout:
+
+            Back:
+                on_release:
+                    root.manager.current = "curvature"
+                    root.manager.transition.direction = "right"
+
+            Draw:
+                on_release:
+                    root.draw()
+                    image.reload()
+
+            Next:
+                on_release:
+                    root.manager.current = "star"
+                    root.manager.transition.direction = "left"
+
+<StarArt>:
+    name: "star"
+
+    canvas.before:
+        Color:
+            rgba: .1, .1, .1, 1
+
+    GridLayout:
+        rows: 2
+
+        Image:
+            id: image
+            source: root.path
+
+        CustomLayout:
+
+            Back:
+                on_release:
+                    root.manager.current = "circle"
+                    root.manager.transition.direction = "right"
+
+            Draw:
+                on_release:
+                    root.draw()
+                    image.reload()
+
+            Next:
+                on_release:
+                    root.manager.current = "star"
+                    root.manager.transition.direction = "left"
